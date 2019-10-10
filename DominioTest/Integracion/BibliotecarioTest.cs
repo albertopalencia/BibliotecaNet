@@ -15,6 +15,8 @@ namespace DominioTest.Integracion
     public class BibliotecarioTest
     {
         public const String CRONICA_UNA_MUERTE_ANUNCIADA = "Cronica de una muerte anunciada";
+        public const String I_S_B_N = "AO157F751OA";
+        public const String USER = "";
         private  BibliotecaContexto contexto;
         private  RepositorioLibroEF repositorioLibro;
         private RepositorioPrestamoEF repositorioPrestamo;
@@ -67,6 +69,50 @@ namespace DominioTest.Integracion
                 Assert.AreEqual("El libro no se encuentra disponible", err.Message);
             }
         
+        }
+
+        [TestMethod]
+        public void PrestarLibroConISBNPalindromo()
+        {
+            // Arrange
+            Libro libro = new LibroTestDataBuilder().ConIsbn(I_S_B_N).Build();
+            repositorioLibro.Agregar(libro);
+            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
+
+            // Act
+            
+            try
+            {
+                bibliotecario.Prestar(libro.Isbn, "Juan");
+                Assert.Fail();
+            }
+            catch (Exception err)
+            {
+                // Assert
+                Assert.AreEqual("Los libros palíndromos solo se pueden utilizar en la biblioteca", err.Message);
+            }
+        }
+
+        [TestMethod]
+        public void PrestarLibroConISBNSinNombreUsuario()
+        {
+            // Arrange
+            Libro libro = new LibroTestDataBuilder().ConTitulo(CRONICA_UNA_MUERTE_ANUNCIADA).Build();
+            repositorioLibro.Agregar(libro);
+            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
+
+            // Act
+
+            try
+            {
+                bibliotecario.Prestar(libro.Isbn, USER);
+                Assert.Fail();
+            }
+            catch (Exception err)
+            {
+                // Assert
+                Assert.AreEqual("El nombre del usuario no puede ser null", err.Message);
+            }
         }
 
     }

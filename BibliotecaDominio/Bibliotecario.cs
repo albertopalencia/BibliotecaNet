@@ -19,13 +19,42 @@ namespace BibliotecaDominio
 
         public void Prestar(string isbn, string nombreUsuario)
         {
-            throw new Exception("se debe implementar este método");
+            // regla de negocio 1 - debe entregar el ISBN
+            if (string.IsNullOrEmpty(isbn))
+            {
+                throw new ArgumentException("ISBN no puede ser null");
+            }
+            // regla de negocio 4 - debe solicitar el nombreUsuario
+            if (string.IsNullOrEmpty(nombreUsuario))
+            {
+                throw new ArgumentException("El nombre del usuario no puede ser null");
+            }
+            // regla 2 - un isbn no se puede prestar más de una vez
+            if(EsPrestado(isbn))
+            {
+                Exception ex = new Exception(EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE);
+                throw ex;
+            }
+            // que el libro exista en la biblioteca
+            var libroaprestar = libroRepositorio.ObtenerPorIsbn(isbn);
+            // si existe y no esta prestado valide y prestarlo
+            if (libroaprestar != null)
+            {
+                DateTime diaPrestamo = DateTime.Now;
+
+                Prestamo enPrestamo = new Prestamo(diaPrestamo, libroaprestar, nombreUsuario);
+
+                prestamoRepositorio.Agregar(enPrestamo);
+
+            }
         }
 
 
         public bool EsPrestado(string isbn)
         {
-            return false;
+            var prestado = prestamoRepositorio.ObtenerLibroPrestadoPorIsbn(isbn);
+
+            return prestado != null;
         }
     }
 }

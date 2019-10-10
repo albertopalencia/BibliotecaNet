@@ -23,9 +23,18 @@ namespace BibliotecaRepositorio.Repositorio
 
         public void Agregar(Prestamo prestamo)
         {
-            PrestamoEntidad prestamoEntidad = BuildPrestamoEntidad(prestamo);
-            bibliotecaContexto.Prestamos.Add(prestamoEntidad);
-            bibliotecaContexto.SaveChanges();
+
+            try
+            {
+                PrestamoEntidad prestamoEntidad = BuildPrestamoEntidad(prestamo);
+                bibliotecaContexto.Prestamos.Add(prestamoEntidad);
+                bibliotecaContexto.SaveChanges();
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             
         }
 
@@ -44,6 +53,10 @@ namespace BibliotecaRepositorio.Repositorio
 
         private PrestamoEntidad BuildPrestamoEntidad(Prestamo prestamo)
         {
+            if (EsPalindromo(prestamo.Libro.Isbn))
+            {
+                throw new ArgumentException("Los libros palíndromos solo se pueden utilizar en la biblioteca");
+            }
             LibroEntidad libroEntidad = libroRepositorio.ObtenerLibroEntidadPorIsbn(prestamo.Libro.Isbn);
 
             PrestamoEntidad prestamoEntidad = new PrestamoEntidad
@@ -55,11 +68,16 @@ namespace BibliotecaRepositorio.Repositorio
             return prestamoEntidad;
         }
 
+        private bool EsPalindromo(string isbn)
+        {
+            return isbn == new String(isbn.Reverse().ToArray());
+        }
+
         public Prestamo Obtener(string isbn)
         {
             PrestamoEntidad prestamoEntidad = ObtenerPrestamoEntidadPorIsbn(isbn);
 
-            return new Prestamo(prestamoEntidad.FechaSolicitud, LibroBuilder.ConvertirADominio(prestamoEntidad.LibroEntidad), prestamoEntidad.FechaEntregaMaxima, prestamoEntidad.NombreUsuario);
+            return new Prestamo(prestamoEntidad.FechaSolicitud, LibroBuilder.ConvertirADominio(prestamoEntidad.LibroEntidad), prestamoEntidad.NombreUsuario);
         }                
     }
 }
