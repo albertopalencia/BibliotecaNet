@@ -16,6 +16,7 @@ namespace DominioTest.Integracion
     {
         public const String CRONICA_UNA_MUERTE_ANUNCIADA = "Cronica de una muerte anunciada";
         public const String I_S_B_N = "AO157F751OA";
+        
         public const String USER = "";
         private  BibliotecaContexto contexto;
         private  RepositorioLibroEF repositorioLibro;
@@ -114,6 +115,8 @@ namespace DominioTest.Integracion
                 Assert.AreEqual("El nombre del usuario no puede ser null", err.Message);
             }
         }
+
+        
 
     }
 }
