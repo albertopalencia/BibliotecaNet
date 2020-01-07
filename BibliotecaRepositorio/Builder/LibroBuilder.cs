@@ -1,14 +1,13 @@
 ﻿using BibliotecaDominio;
 using BibliotecaRepositorio.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BibliotecaRepositorio.Builder
 {
     public class LibroBuilder
     {
-        private LibroBuilder() { }
+        private LibroBuilder()
+        {
+        }
 
         internal static Libro ConvertirADominio(LibroEntidad libroEntidad)
         {

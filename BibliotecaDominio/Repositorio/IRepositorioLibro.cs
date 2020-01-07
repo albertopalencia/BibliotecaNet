@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BibliotecaDominio.IRepositorio
+﻿namespace BibliotecaDominio.IRepositorio
 {
     public interface IRepositorioLibro
     {

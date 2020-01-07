@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using BibliotecaDominio.Helper;
+﻿using BibliotecaDominio.Helper;
+using System;
 
 namespace BibliotecaDominio
 {
     public class Prestamo
     {
-        public DateTime FechaSolicitud { get;}
-        public Libro Libro { get;}
+        public DateTime FechaSolicitud { get; }
+        public Libro Libro { get; }
         public DateTime? FechaEntregaMaxima { get; }
-        public string NombreUsuario { get;}
+        public string NombreUsuario { get; }
 
-       
         public Prestamo(DateTime fechaSolicitud, Libro libro, string nombreUsuario)
         {
             DateTime? fechaMax = null;
@@ -36,7 +32,7 @@ namespace BibliotecaDominio
             {
                 if (char.IsDigit(i))
                 {
-                    suma += (int) char.GetNumericValue(i);
+                    suma += (int)char.GetNumericValue(i);
                 }
             }
 

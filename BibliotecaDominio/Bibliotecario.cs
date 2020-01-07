@@ -1,15 +1,13 @@
 ﻿using BibliotecaDominio.IRepositorio;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BibliotecaDominio
 {
     public class Bibliotecario
     {
         public const string EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE = "El libro no se encuentra disponible";
-        private  IRepositorioLibro libroRepositorio;
-        private  IRepositorioPrestamo prestamoRepositorio;
+        private IRepositorioLibro libroRepositorio;
+        private IRepositorioPrestamo prestamoRepositorio;
 
         public Bibliotecario(IRepositorioLibro libroRepositorio, IRepositorioPrestamo prestamoRepositorio)
         {
@@ -30,7 +28,7 @@ namespace BibliotecaDominio
                 throw new ArgumentException("El nombre del usuario no puede ser null");
             }
             // regla 2 - un isbn no se puede prestar más de una vez
-            if(EsPrestado(isbn))
+            if (EsPrestado(isbn))
             {
                 Exception ex = new Exception(EL_LIBRO_NO_SE_ENCUENTRA_DISPONIBLE);
                 throw ex;
@@ -45,10 +43,8 @@ namespace BibliotecaDominio
                 Prestamo enPrestamo = new Prestamo(diaPrestamo, libroaprestar, nombreUsuario);
 
                 prestamoRepositorio.Agregar(enPrestamo);
-
             }
         }
-
 
         public bool EsPrestado(string isbn)
         {

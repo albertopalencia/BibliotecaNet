@@ -3,10 +3,7 @@ using BibliotecaDominio.IRepositorio;
 using BibliotecaRepositorio.Builder;
 using BibliotecaRepositorio.Contexto;
 using BibliotecaRepositorio.Entidades;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BibliotecaRepositorio.Repositorio
 {
@@ -18,7 +15,7 @@ namespace BibliotecaRepositorio.Repositorio
         {
             this.bibliotecaContexto = bibliotecaContexto;
         }
-        
+
         public Libro ObtenerPorIsbn(string isbn)
         {
             LibroEntidad libroEntidad = ObtenerLibroEntidadPorIsbn(isbn);

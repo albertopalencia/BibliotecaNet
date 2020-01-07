@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DominioTest.Integracion
 {
@@ -8,13 +6,12 @@ namespace DominioTest.Integracion
     {
         public CalificadorUtil()
         {
-
         }
 
         public static DateTime sumarDiasSinContarDomingo(DateTime fechaAsuma, int diasAsumar)
         {
             int diasOperar = diasAsumar - 1;
-            while(diasOperar > 0)
+            while (diasOperar > 0)
             {
                 fechaAsuma.AddDays(1);
                 diasOperar = DisminuirDiasNoEsdomingo(fechaAsuma, diasOperar);
@@ -24,7 +21,7 @@ namespace DominioTest.Integracion
 
         public static int DisminuirDiasNoEsdomingo(DateTime fechaAsumar, int diasOperar)
         {
-            if(NoEsDomingo(fechaAsumar))
+            if (NoEsDomingo(fechaAsumar))
             {
                 diasOperar--;
             }

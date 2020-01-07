@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BibliotecaDominio
+﻿namespace BibliotecaDominio
 {
     public class Libro
     {
         public string Isbn { get; }
-        public string Titulo { get; }        
+        public string Titulo { get; }
         public int Anio { get; }
-        
 
         public Libro(string isbn, string titulo, int anio)
         {

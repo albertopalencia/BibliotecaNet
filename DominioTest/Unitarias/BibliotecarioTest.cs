@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using BibliotecaDominio;
+﻿using BibliotecaDominio;
 using BibliotecaDominio.IRepositorio;
 using DominioTest.TestDataBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -14,8 +11,8 @@ namespace DominioTest.Unitarias
     {
         public BibliotecarioTest()
         {
-
         }
+
         public Mock<IRepositorioLibro> repositorioLibro;
         public Mock<IRepositorioPrestamo> repositorioPrestamo;
 
@@ -23,7 +20,7 @@ namespace DominioTest.Unitarias
         public void setup()
         {
             repositorioLibro = new Mock<IRepositorioLibro>();
-           repositorioPrestamo = new Mock<IRepositorioPrestamo>();
+            repositorioPrestamo = new Mock<IRepositorioPrestamo>();
         }
 
         [TestMethod]
@@ -32,11 +29,11 @@ namespace DominioTest.Unitarias
             // Arrange
             var libroTestDataBuilder = new LibroTestDataBuilder();
             Libro libro = libroTestDataBuilder.Build();
-            
+
             repositorioPrestamo.Setup(r => r.ObtenerLibroPrestadoPorIsbn(libro.Isbn)).Returns(libro);
 
             // Act
-            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro.Object,repositorioPrestamo.Object);
+            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro.Object, repositorioPrestamo.Object);
             var esprestado = bibliotecario.EsPrestado(libro.Isbn);
 
             // Assert
@@ -58,6 +55,5 @@ namespace DominioTest.Unitarias
             // Assert
             Assert.IsFalse(esprestado);
         }
-        
     }
 }

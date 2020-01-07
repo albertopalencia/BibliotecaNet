@@ -4,9 +4,7 @@ using BibliotecaRepositorio.Builder;
 using BibliotecaRepositorio.Contexto;
 using BibliotecaRepositorio.Entidades;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace BibliotecaRepositorio.Repositorio
 {
@@ -18,12 +16,11 @@ namespace BibliotecaRepositorio.Repositorio
         public RepositorioPrestamoEF(BibliotecaContexto bibliotecaContexto, IRepositorioLibro repositorioLibro)
         {
             this.bibliotecaContexto = bibliotecaContexto;
-            this.libroRepositorio = (IRepositorioLibroEF) repositorioLibro;
+            this.libroRepositorio = (IRepositorioLibroEF)repositorioLibro;
         }
 
         public void Agregar(Prestamo prestamo)
         {
-
             try
             {
                 PrestamoEntidad prestamoEntidad = BuildPrestamoEntidad(prestamo);
@@ -35,7 +32,6 @@ namespace BibliotecaRepositorio.Repositorio
                 Console.WriteLine(e);
                 throw;
             }
-            
         }
 
         public Libro ObtenerLibroPrestadoPorIsbn(string isbn)
@@ -78,6 +74,6 @@ namespace BibliotecaRepositorio.Repositorio
             PrestamoEntidad prestamoEntidad = ObtenerPrestamoEntidadPorIsbn(isbn);
 
             return new Prestamo(prestamoEntidad.FechaSolicitud, LibroBuilder.ConvertirADominio(prestamoEntidad.LibroEntidad), prestamoEntidad.NombreUsuario);
-        }                
+        }
     }
 }

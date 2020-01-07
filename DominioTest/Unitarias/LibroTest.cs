@@ -1,9 +1,7 @@
-﻿using DominioTest.TestDataBuilders;
+﻿using BibliotecaDominio;
+using DominioTest.TestDataBuilders;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using BibliotecaDominio;
+
 namespace DominioTest.Unitarias
 {
     [TestClass]
@@ -12,9 +10,9 @@ namespace DominioTest.Unitarias
         private const int ANIO = 2012;
         private const string TITULO = "Cien años de soledad";
         private const string ISBN = "1234";
+
         public LibroTest()
         {
-
         }
 
         [TestMethod]
@@ -23,7 +21,6 @@ namespace DominioTest.Unitarias
             // Arrange
             LibroTestDataBuilder libroTestBuilder = new LibroTestDataBuilder().ConTitulo(TITULO).
                 ConAnio(ANIO).ConIsbn(ISBN);
-
 
             // Act
             Libro libro = libroTestBuilder.Build();
