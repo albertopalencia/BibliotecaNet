@@ -1,58 +1,52 @@
-﻿using BibliotecaDominio;
+﻿using System;
+using BibliotecaDominio;
 using BibliotecaRepositorio.Contexto;
 using BibliotecaRepositorio.Repositorio;
 using DominioTest.TestDataBuilders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace DominioTest.Integracion
 {
     [TestClass]
     public class BibliotecarioTest
     {
-        public const String CRONICA_UNA_MUERTE_ANUNCIADA = "Cronica de una muerte anunciada";
-        public const String I_S_B_N = "AO157F751OA";
+        public const string CRONICAUNAMUERTEANUNCIADA = "Cronica de una muerte anunciada";
+        public const string ISBN = "AO157F751OA";
 
-        public const String USER = "";
-        private BibliotecaContexto contexto;
-        private RepositorioLibroEF repositorioLibro;
-        private RepositorioPrestamoEF repositorioPrestamo;
+        public const string USER = "";
+        private BibliotecaContexto _contexto;
+        private RepositorioLibroEF _repositorioLibro;
+        private RepositorioPrestamoEF _repositorioPrestamo;
 
         [TestInitialize]
         public void setup()
         {
             var optionsBuilder = new DbContextOptionsBuilder<BibliotecaContexto>();
-            contexto = new BibliotecaContexto(optionsBuilder.Options);
-            repositorioLibro = new RepositorioLibroEF(contexto);
-            repositorioPrestamo = new RepositorioPrestamoEF(contexto, repositorioLibro);
+            _contexto = new BibliotecaContexto(optionsBuilder.Options);
+            _repositorioLibro = new RepositorioLibroEF(_contexto);
+            _repositorioPrestamo = new RepositorioPrestamoEF(_contexto, _repositorioLibro);
         }
 
         [TestMethod]
+        [Owner("AlbertoPalencia")]
         public void PrestarLibroTest()
         {
-            // Arrange
-            Libro libro = new LibroTestDataBuilder().ConTitulo(CRONICA_UNA_MUERTE_ANUNCIADA).Build();
-            repositorioLibro.Agregar(libro);
-            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
-
-            // Act
+            var libro = new LibroTestDataBuilder().ConTitulo(CRONICAUNAMUERTEANUNCIADA).Build();
+            _repositorioLibro.Agregar(libro);
+            var bibliotecario = new Bibliotecario(_repositorioLibro, _repositorioPrestamo);
             bibliotecario.Prestar(libro.Isbn, "AlbertoPalencia");
-
-            // Assert
             Assert.AreEqual(bibliotecario.EsPrestado(libro.Isbn), true);
-            Assert.IsNotNull(repositorioPrestamo.ObtenerLibroPrestadoPorIsbn(libro.Isbn));
+            Assert.IsNotNull(_repositorioPrestamo.ObtenerLibroPrestadoPorIsbn(libro.Isbn));
         }
 
         [TestMethod]
+        [Owner("AlbertoPalencia")]
         public void PrestarLibroNoDisponibleTest()
         {
-            // Arrange
-            Libro libro = new LibroTestDataBuilder().ConTitulo(CRONICA_UNA_MUERTE_ANUNCIADA).Build();
-            repositorioLibro.Agregar(libro);
-            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
-
-            // Act
+            var libro = new LibroTestDataBuilder().ConTitulo(CRONICAUNAMUERTEANUNCIADA).Build();
+            _repositorioLibro.Agregar(libro);
+            var bibliotecario = new Bibliotecario(_repositorioLibro, _repositorioPrestamo);
             bibliotecario.Prestar(libro.Isbn, "AlbertoPalencia");
             try
             {
@@ -61,21 +55,17 @@ namespace DominioTest.Integracion
             }
             catch (Exception err)
             {
-                // Assert
                 Assert.AreEqual("El libro no se encuentra disponible", err.Message);
             }
         }
 
         [TestMethod]
+        [Owner("AlbertoPalencia")]
         public void PrestarLibroConISBNPalindromo()
         {
-            // Arrange
-            Libro libro = new LibroTestDataBuilder().ConIsbn(I_S_B_N).Build();
-            repositorioLibro.Agregar(libro);
-            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
-
-            // Act
-
+            var libro = new LibroTestDataBuilder().ConIsbn(ISBN).Build();
+            _repositorioLibro.Agregar(libro);
+            var bibliotecario = new Bibliotecario(_repositorioLibro, _repositorioPrestamo);
             try
             {
                 bibliotecario.Prestar(libro.Isbn, "AlbertoPalencia");
@@ -83,21 +73,17 @@ namespace DominioTest.Integracion
             }
             catch (Exception err)
             {
-                // Assert
                 Assert.AreEqual("Los libros palíndromos solo se pueden utilizar en la biblioteca", err.Message);
             }
         }
 
         [TestMethod]
+        [Owner("AlbertoPalencia")]
         public void PrestarLibroConISBNSinNombreUsuario()
         {
-            // Arrange
-            Libro libro = new LibroTestDataBuilder().ConTitulo(CRONICA_UNA_MUERTE_ANUNCIADA).Build();
-            repositorioLibro.Agregar(libro);
-            Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro, repositorioPrestamo);
-
-            // Act
-
+            var libro = new LibroTestDataBuilder().ConTitulo(CRONICAUNAMUERTEANUNCIADA).Build();
+            _repositorioLibro.Agregar(libro);
+            var bibliotecario = new Bibliotecario(_repositorioLibro, _repositorioPrestamo);
             try
             {
                 bibliotecario.Prestar(libro.Isbn, USER);
@@ -105,7 +91,6 @@ namespace DominioTest.Integracion
             }
             catch (Exception err)
             {
-                // Assert
                 Assert.AreEqual("El nombre del usuario no puede ser null", err.Message);
             }
         }

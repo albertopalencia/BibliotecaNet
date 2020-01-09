@@ -24,35 +24,26 @@ namespace DominioTest.Unitarias
         }
 
         [TestMethod]
+        [Owner("AlbertoPalenciaBenedetti")]
         public void EsPrestado()
         {
-            // Arrange
             var libroTestDataBuilder = new LibroTestDataBuilder();
             Libro libro = libroTestDataBuilder.Build();
-
             repositorioPrestamo.Setup(r => r.ObtenerLibroPrestadoPorIsbn(libro.Isbn)).Returns(libro);
-
-            // Act
             Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro.Object, repositorioPrestamo.Object);
             var esprestado = bibliotecario.EsPrestado(libro.Isbn);
-
-            // Assert
             Assert.AreEqual(esprestado, true);
         }
 
         [TestMethod]
+        [Owner("AlbertoPalenciaBenedetti")]
         public void LibroNoPrestadoTest()
         {
-            // Arrange
             var libroTestDataBuilder = new LibroTestDataBuilder();
             Libro libro = libroTestDataBuilder.Build();
             Bibliotecario bibliotecario = new Bibliotecario(repositorioLibro.Object, repositorioPrestamo.Object);
             repositorioPrestamo.Setup(r => r.ObtenerLibroPrestadoPorIsbn(libro.Isbn)).Equals(null);
-
-            // Act
             var esprestado = bibliotecario.EsPrestado(libro.Isbn);
-
-            // Assert
             Assert.IsFalse(esprestado);
         }
     }

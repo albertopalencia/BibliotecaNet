@@ -66,7 +66,7 @@ namespace BibliotecaRepositorio.Repositorio
 
         private bool EsPalindromo(string isbn)
         {
-            return isbn == new String(isbn.Reverse().ToArray());
+            return isbn == new string(isbn.Reverse().ToArray());
         }
 
         public Prestamo Obtener(string isbn)

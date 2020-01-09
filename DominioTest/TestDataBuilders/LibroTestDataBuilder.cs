@@ -1,5 +1,4 @@
 ﻿using BibliotecaDominio;
-using System;
 
 namespace DominioTest.TestDataBuilders
 {
@@ -7,11 +6,11 @@ namespace DominioTest.TestDataBuilders
     {
         private const int ANIO = 2012;
         private const string TITULO = "Cien años de soledad";
-        private const String ISBN = "1234";
+        private const string ISBN = "1234";
 
         public int Anio { get; set; }
-        public String Isbn { get; set; }
-        public String Titulo { get; set; }
+        public string Isbn { get; set; }
+        public string Titulo { get; set; }
 
         public LibroTestDataBuilder()
         {

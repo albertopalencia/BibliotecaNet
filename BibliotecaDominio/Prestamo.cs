@@ -1,5 +1,6 @@
 ﻿using BibliotecaDominio.Helper;
 using System;
+using System.Linq;
 
 namespace BibliotecaDominio
 {
@@ -13,7 +14,6 @@ namespace BibliotecaDominio
         public Prestamo(DateTime fechaSolicitud, Libro libro, string nombreUsuario)
         {
             DateTime? fechaMax = null;
-            // regla 5 - los dígitos numericos que componen el ISBN suman más de 30...
             if (IsbnSuma(libro.Isbn) > 30)
             {
                 fechaMax = DatetimeExtensions.SumarDiaslaborales(fechaSolicitud, 15);
@@ -27,16 +27,7 @@ namespace BibliotecaDominio
 
         private int IsbnSuma(string isbn)
         {
-            int suma = 0;
-            foreach (char i in isbn)
-            {
-                if (char.IsDigit(i))
-                {
-                    suma += (int)char.GetNumericValue(i);
-                }
-            }
-
-            return suma;
+            return isbn.Where(char.IsDigit).Sum(i => (int) char.GetNumericValue(i));
         }
     }
 }

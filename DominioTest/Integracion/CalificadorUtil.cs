@@ -28,7 +28,7 @@ namespace DominioTest.Integracion
             return diasOperar;
         }
 
-        public static Boolean NoEsDomingo(DateTime fechaAsumar)
+        public static bool NoEsDomingo(DateTime fechaAsumar)
         {
             var diasemana = fechaAsumar.DayOfWeek.ToString();
             if (diasemana != "Sunday")
